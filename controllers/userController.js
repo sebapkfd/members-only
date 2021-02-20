@@ -1,23 +1,31 @@
 const User = require('../models/user');
 const passport = require('../passport/setup');
+const bcrypt = require('bcryptjs');
 
 exports.sign_up_get = function(req, res, next) {
     res.render('sign_up', { title: 'Sign Up' });
 }
 
 exports.sign_up_post = function(req, res, next) {
-    const user = new User(
-        {
-            first_name: req.body.firstname,
-            last_name: req.body.lastname,
-            username: req.body.username,
-            password: req.body.password,
-            status: 'member'
+    bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
+        if (err) {
+            return next(err)
         }
-    )
-    user.save((err) => {
-        if (err) { return next(err) }
-        res.redirect('/')
+        else {
+            const user = new User(
+                {
+                    first_name: req.body.firstname,
+                    last_name: req.body.lastname,
+                    username: req.body.username,
+                    password: hashedPassword,
+                    status: 'member'
+                }
+            )
+            user.save((err) => {
+                if (err) { return next(err) }
+                res.redirect('/')
+            })
+        }
     })
 }
 
