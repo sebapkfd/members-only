@@ -24,6 +24,7 @@ exports.sign_up_post = function(req, res, next) {
             user.save((err) => {
                 if (err) { return next(err) }
                 res.redirect('/')
+                // return
             })
         }
     })
@@ -33,11 +34,13 @@ exports.log_in_get = function(req, res, next) {
     res.render('log_in', { title: 'Log in' });
 }
 
-exports.log_in_post =
-    ('/log_in',
-    passport.authenticate('local', {
-        successRedirect: '/',
-        failureRedirect: '/users/log-in',
-        failureFlash: true,
-        passReqToCallback: true,
-    }));
+exports.log_in_post = ('/log_in', passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/"
+  })
+);
+
+exports.log_out = function(req, res) {
+    req.logout();
+    res.redirect('/');
+}
