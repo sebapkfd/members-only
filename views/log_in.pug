@@ -3,18 +3,13 @@ extends layout
 block content 
   h1= title
 
-  form(method="post") 
   form(method='POST' action='')
     div.form-group
-      label(for='firstname') First Name: 
-      input#firstname.form-control(type='text', placeholder='First name' name='firstname' required='true' )
-      label(for='lastname') Last Name:
-      input#lastname.form-control(type='text', placeholder='Last name' name='lastname' required='true' )
-      label(for='username') username:
-      input#username.form-control(type='text', placeholder='username' name='username' required='true' )
-      label(for='password') password:
-      input#password.form-control(type='text', placeholder='password' name='password' required='true')
-      button(type="submit") Sign up
+      label(for='username') Username:
+      input#username.form-control(type='text', placeholder='Username' name='username' required='true' )
+      label(for='password') Password:
+      input#password.form-control(type='text', placeholder='Password' name='password' required='true')
+      button(type="submit") Log in
   hr
   p 
     a(href="/") Back Home
