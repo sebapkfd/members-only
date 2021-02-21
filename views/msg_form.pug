@@ -1,0 +1,15 @@
+extends layout
+
+block content 
+  h1 #{title}
+  
+  form(method='POST' action='')
+    div.form-group
+      label(for='title') Title:
+      input#title.form-control(type='text', placeholder='Title' name='title' required='true' )
+      label(for='text') Message:
+      textarea#text.form-control(type='textarea', placeholder='Message' name='text' required='true')
+      button(type="submit") Post
+  hr
+  p 
+    a(href="/") Back Home

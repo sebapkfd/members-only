@@ -7,7 +7,10 @@ block content
     h1 #{title}
   hr
   if user 
-    a(href="/log-out") Log out
+    p
+      a(href="/new-message") Post a Message!
+    p
+      a(href="/log-out") Log out
   else
     p 
       a(href="/sign-up") Sign up 
