@@ -6,28 +6,35 @@ exports.sign_up_get = function(req, res, next) {
     res.render('sign_up', { title: 'Sign Up' });
 }
 
+//If err redirect to sign up
+
 exports.sign_up_post = function(req, res, next) {
-    bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
-        if (err) {
-            return next(err)
-        }
-        else {
-            const user = new User(
-                {
-                    first_name: req.body.firstname,
-                    last_name: req.body.lastname,
-                    username: req.body.username,
-                    password: hashedPassword,
-                    status: 'member'
-                }
-            )
-            user.save((err) => {
-                if (err) { return next(err) }
-                res.redirect('/')
-                // return
-            })
-        }
-    })
+    if (req.body.password === req.body.confirm) {
+        bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
+            if (err) {
+                return next(err)
+            }
+            else {
+                const user = new User(
+                    {
+                        first_name: req.body.firstname,
+                        last_name: req.body.lastname,
+                        username: req.body.username,
+                        password: hashedPassword,
+                        status: 'member'
+                    }
+                )
+                user.save((err) => {
+                    if (err) { return next(err) }
+                    res.redirect('/')
+                    // return
+                })
+            }
+        })
+    }
+    else {
+        res.redirect('/sign-up');
+    }
 }
 
 exports.log_in_get = function(req, res, next) {
