@@ -9,7 +9,7 @@ passport.use(
         User.findOne({ username: username}, (err, user) => {
             if (err) { return done(err) }
             if (!user) { //must be changed, it reveals info
-                return done(null, false, { message: 'Incorrect username'});
+                return done(null, false, { message: 'Incorrect data'});
             }
             bcrypt.compare(password, user.password, (err, res) => {
                 if (res) {
@@ -17,7 +17,7 @@ passport.use(
                   return done(null, user)
                 } else {
                   // passwords do not match!
-                  return done(null, false, { message: "Incorrect password" })
+                  return done(null, false, { message: "Incorrect data" })
                 }
             })
         })
