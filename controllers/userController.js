@@ -18,8 +18,6 @@ exports.sign_up_get = function(req, res, next) {
 }
 
 exports.sign_up_post = [
-    body('firstname', 'Must not be empty').trim().isLength({ min:1 }).escape(),
-    body('lastname', 'Must not be empty').trim().isLength({ min:1 }).escape(),
     body('username', 'Must not be empty').trim().isLength({ min:1 }).escape(),
     body('password', 'Must not be empty').trim().isLength({ min:1 }).escape(),
     body('confirm', 'Must not be empty').trim().isLength({ min:1 }).escape(),
@@ -34,8 +32,6 @@ exports.sign_up_post = [
                 else {
                     const user = new User(
                         {
-                            first_name: req.body.firstname,
-                            last_name: req.body.lastname,
                             username: req.body.username,
                             password: hashedPassword,
                             status: 'member'
