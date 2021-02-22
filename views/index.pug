@@ -6,6 +6,17 @@ block content
   else
     h1 #{title}
   hr
+  if messages.length > 0
+    ul 
+      each message in messages 
+        li 
+          p #{message.title}
+          p #{message.text}
+          p #{message.timestamp}
+          if user 
+            p By: #{message.user.username}
+          else 
+            p By: Anonymous
   if user 
     p
       a(href="/new-message") Post a Message!

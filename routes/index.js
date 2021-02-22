@@ -4,9 +4,11 @@ const user_controller = require('../controllers/userController');
 const msg_controller = require('../controllers/msgController');
 
 /* GET home page. */
-router.get("/", (req, res) => {
-  res.render("index", { title: 'Welcome', user: req.user });
-});
+// router.get("/", (req, res) => {
+//   res.render("index", { title: 'Welcome', user: req.user });
+// });
+
+router.get("/", user_controller.index);
 
 router.get('/sign-up', user_controller.sign_up_get)
 

@@ -1,7 +1,17 @@
 const User = require('../models/user');
+const Msg = require('../models/msg');
 const passport = require('../passport/setup');
 const bcrypt = require('bcryptjs');
 const { body, validationResult } = require('express-validator');
+
+exports.index = (req, res, next) => {
+    Msg.find()
+    .populate('user')
+    .exec((err, msgs) => {
+        if (err) { return next(err) }
+        res.render("index", { title: 'Welcome', user: req.user, messages: msgs });
+    })
+}
 
 exports.sign_up_get = function(req, res, next) {
     res.render('sign_up', { title: 'Sign Up' });
