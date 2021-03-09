@@ -29,6 +29,25 @@ exports.new_msg_post = [
     }
 ]
 
+exports.delete_get = (req, res, next) => {
+    Msg.findById(req.params.id)
+    .populate('user')
+    .exec((err, result) => {
+        if (err) { return next(err) }
+        res.render('delete', {title: 'Delete Message', msg: result});
+    })
+}
+
 exports.delete_post = (req, res, next) => {
-    res.render('Delete to be added')
+    Msg.findById(req.params.id)
+    .populate('user')
+    .exec((err) => {
+        if (err) { return next(err) }
+        else {
+            Msg.findByIdAndRemove(req.body.msgid, function deleteMsg(err) {
+                if (err) { return next(err) }
+                res.redirect('/')
+            })
+        }
+    })
 }

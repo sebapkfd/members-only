@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1 #{title}: #{msg.title}
+
+  p #[strong Author: ]
+    a(href=msg.user.id) #{msg.user.usernmae}
+  p #[strong Text: ] #{msg.text}
+  p #[strong Date: ] #{msg.timestamp}
+
+  p Do you really want to delete this message?
+
+  form(method='POST' action='')
+      div.form-group
+      input#msgid.form-control(type='hidden', name='msgid', required='true', value=msg._id )
+
+      button.btn.btn-primary(type='submit') Delete

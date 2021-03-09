@@ -17,9 +17,8 @@ block content
             p By: #{message.user.username}
           else 
             p By: Anonymous
-          if user && user.username === message.user.username && user.status === 'member'
-            form(action="", method="DELETE") 
-              button Delete Message
+          if (user && user.username === message.user.username && user.status === 'member') || (user && user.status === 'admin')
+            a(href=message.id+'/delete') Delete Item 
   if user 
     p
       a(href="/new-message") Post a Message!
