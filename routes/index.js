@@ -23,6 +23,10 @@ router.get('/become-member', user_controller.become_member_get)
 
 router.post('/become-member', user_controller.become_member_post)
 
+router.get('/become-admin', user_controller.become_admin_get)
+
+router.post('/become-admin', user_controller.become_admin_post)
+
 router.delete('/', msg_controller.delete_post);
 
 module.exports = router;

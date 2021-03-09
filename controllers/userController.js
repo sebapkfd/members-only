@@ -68,7 +68,7 @@ exports.log_out = function(req, res) {
 }
 
 exports.become_member_get = (req, res, next) => {
-    res.render('member_form', { title: 'Become a Member!', user: req.user });
+    res.render('join_form', { title: 'Become a Member!', user: req.user, text: 'Become member'});
 }
 
 exports.become_member_post = [
@@ -77,7 +77,7 @@ exports.become_member_post = [
     (req, res, next) => {
         const errors = validationResult(req);
         console.log(req);
-        if (req.body.password === 'member') {
+        if (req.body.password === 'member' && req.user.status === 'user') {
                 const user = new User(
                     {
                         username: req.user.username,
@@ -94,8 +94,39 @@ exports.become_member_post = [
                 }
         }
         else {
-            res.redirect('/sign-up');
+            res.redirect('/');
         }
     }
+]
 
+exports.become_admin_get = (req, res, next) => {
+    res.render('join_form', { title: 'Become an Admin!', user: req.user, text: 'Become admin'});
+}
+
+exports.become_admin_post = [
+    body('password', 'Must not be empty').trim().isLength({ min:1 }).escape(),
+
+    (req, res, next) => {
+        const errors = validationResult(req);
+        console.log(req);
+        if (req.body.password === 'admin' && req.user.status === 'member') {
+                const user = new User(
+                    {
+                        username: req.user.username,
+                        password: req.user.password,
+                        status: 'admin',
+                        _id: req.user.id
+                    }
+                )
+                if (errors.isEmpty()) {
+                    User.findByIdAndUpdate(req.user.id, user, (err, userUpdated) => {
+                        if (err) { return next(err) }
+                        res.redirect('/')
+                    })
+                }
+        }
+        else {
+            res.redirect('/');
+        }
+    }
 ]
