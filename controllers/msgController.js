@@ -28,3 +28,7 @@ exports.new_msg_post = [
         }
     }
 ]
+
+exports.delete_post = (req, res, next) => {
+    res.render('Delete to be added')
+}

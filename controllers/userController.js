@@ -34,7 +34,7 @@ exports.sign_up_post = [
                         {
                             username: req.body.username,
                             password: hashedPassword,
-                            status: 'member'
+                            status: 'user'
                         }
                     )
                     if (errors.isEmpty()) {
@@ -66,3 +66,36 @@ exports.log_out = function(req, res) {
     req.logout();
     res.redirect('/');
 }
+
+exports.become_member_get = (req, res, next) => {
+    res.render('member_form', { title: 'Become a Member!', user: req.user });
+}
+
+exports.become_member_post = [
+    body('password', 'Must not be empty').trim().isLength({ min:1 }).escape(),
+
+    (req, res, next) => {
+        const errors = validationResult(req);
+        console.log(req);
+        if (req.body.password === 'member') {
+                const user = new User(
+                    {
+                        username: req.user.username,
+                        password: req.user.password,
+                        status: 'member',
+                        _id: req.user.id
+                    }
+                )
+                if (errors.isEmpty()) {
+                    User.findByIdAndUpdate(req.user.id, user, (err, userUpdated) => {
+                        if (err) { return next(err) }
+                        res.redirect('/')
+                    })
+                }
+        }
+        else {
+            res.redirect('/sign-up');
+        }
+    }
+
+]

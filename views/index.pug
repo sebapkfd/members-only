@@ -17,9 +17,18 @@ block content
             p By: #{message.user.username}
           else 
             p By: Anonymous
+          if user && user.username === message.user.username && user.status === 'member'
+            form(action="", method="DELETE") 
+              button Delete Message
   if user 
     p
       a(href="/new-message") Post a Message!
+    if user.status === 'user'
+      p 
+        a(href="/become-member") Become a Member
+    else if user.status === 'member'
+      p 
+        a(href="/become-admin") Become Admin
     p
       a(href="/log-out") Log out
   else

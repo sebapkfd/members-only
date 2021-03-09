@@ -19,4 +19,10 @@ router.get('/new-message', msg_controller.new_msg_get)
 
 router.post('/new-message', msg_controller.new_msg_post)
 
+router.get('/become-member', user_controller.become_member_get)
+
+router.post('/become-member', user_controller.become_member_post)
+
+router.delete('/', msg_controller.delete_post);
+
 module.exports = router;
