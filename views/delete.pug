@@ -4,7 +4,7 @@ block content
   h1 #{title}: #{msg.title}
 
   p #[strong Author: ]
-    a(href=msg.user.id) #{msg.user.usernmae}
+    a(href='/user/'+msg.user.id) #{msg.user.username}
   p #[strong Text: ] #{msg.text}
   p #[strong Date: ] #{msg.timestamp}
 
@@ -15,3 +15,5 @@ block content
       input#msgid.form-control(type='hidden', name='msgid', required='true', value=msg._id )
 
       button.btn.btn-primary(type='submit') Delete
+      p 
+        a(href="/") Back Home

@@ -31,5 +31,7 @@ router.get('/:id/delete', msg_controller.delete_get);
 
 router.post('/:id/delete', msg_controller.delete_post);
 
+router.get('/user/:id', user_controller.profile)
+
 
 module.exports = router;

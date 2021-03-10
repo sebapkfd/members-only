@@ -148,3 +148,11 @@ exports.become_admin_post = [
         }
     }
 ]
+
+exports.profile = (req, res, next) => {
+    User.findById(req.params.id)
+    .exec((err, result) => {
+        if (err) { return(next) }
+        res.render('profile', {title: `${result.username}`, user: result})
+    })
+}

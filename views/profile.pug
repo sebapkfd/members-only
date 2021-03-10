@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1 #{title}: #{user.username}
+  p #[strong Status: ] #{user.status}
+
+  hr
+  p 
+    a(href="/") Back Home
