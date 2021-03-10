@@ -68,16 +68,21 @@ exports.log_out = function(req, res) {
 }
 
 exports.become_member_get = (req, res, next) => {
-    res.render('join_form', { title: 'Become a Member!', user: req.user, text: 'Become member'});
+    if (req.user && req.user.status === 'user') {
+        res.render('join_form', { title: 'Become a Member!', user: req.user, text: 'Become member'});
+    }
+    else {
+        res.redirect('/')
+    }
 }
 
 exports.become_member_post = [
     body('password', 'Must not be empty').trim().isLength({ min:1 }).escape(),
 
     (req, res, next) => {
-        const errors = validationResult(req);
-        console.log(req);
-        if (req.body.password === 'member' && req.user.status === 'user') {
+        if (req.user && req.user.status === 'user') {
+            const errors = validationResult(req);
+            if (req.body.password === 'member') {
                 const user = new User(
                     {
                         username: req.user.username,
@@ -92,6 +97,10 @@ exports.become_member_post = [
                         res.redirect('/')
                     })
                 }
+            }
+            else {
+                res.redirect('/become-member')
+            }
         }
         else {
             res.redirect('/');
@@ -100,16 +109,21 @@ exports.become_member_post = [
 ]
 
 exports.become_admin_get = (req, res, next) => {
-    res.render('join_form', { title: 'Become an Admin!', user: req.user, text: 'Become admin'});
+    if (req.user && req.user.status === 'member') {
+        res.render('join_form', { title: 'Become an Admin!', user: req.user, text: 'Become admin'});
+    }
+    else {
+        res.redirect('/')
+    }
 }
 
 exports.become_admin_post = [
     body('password', 'Must not be empty').trim().isLength({ min:1 }).escape(),
 
     (req, res, next) => {
-        const errors = validationResult(req);
-        console.log(req);
-        if (req.body.password === 'admin' && req.user.status === 'member') {
+        if (req.user && req.user.status === 'member') {
+            const errors = validationResult(req);
+            if (req.body.password === 'admin') {
                 const user = new User(
                     {
                         username: req.user.username,
@@ -124,6 +138,10 @@ exports.become_admin_post = [
                         res.redirect('/')
                     })
                 }
+            }
+            else {
+                res.redirect('/become-admin')
+            }
         }
         else {
             res.redirect('/');

@@ -33,6 +33,9 @@ exports.new_msg_post = [
                 })
             }
         }
+        else {
+            res.redirect('/')
+        }
     }
 ]
 
@@ -44,6 +47,9 @@ exports.delete_get = (req, res, next) => {
             if (err) { return next(err) }
             res.render('delete', {title: 'Delete Message', msg: result});
         })
+    }
+    else {
+        res.redirect('/')
     }
 }
 
@@ -60,5 +66,8 @@ exports.delete_post = (req, res, next) => {
                 })
             }
         })
+    }
+    else {
+        res.redirect('/')
     }
 }
